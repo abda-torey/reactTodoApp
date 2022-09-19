@@ -1,6 +1,6 @@
 import { useRef,useContext } from 'react';
 import AuthContext from '../../store/auth-context';
-import {Link,useNavigate} from 'react-router-dom'
+import {Link,useNavigate,useLocation} from 'react-router-dom'
 import classes from './loginForm.module.css';
 import {Form, InputGroup,Button} from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
@@ -11,7 +11,10 @@ const LoginForm = props => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const authCtx = useContext(AuthContext);
-    const navigate = useNavigate();
+    let Navigate = useNavigate();
+    const Location = useLocation();
+
+   
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -36,8 +39,10 @@ const LoginForm = props => {
             }
         }).then(data => {
             console.log(data);
-            authCtx.login(data.idToken);
-            navigate('/profile');
+            const expiresTime = new Date(new Date().getTime() + (+data.expiresIn * 1000));
+            
+            authCtx.login(data.idToken,expiresTime.toISOString());
+            Navigate('/profile',{replace:true});
 
         });
 

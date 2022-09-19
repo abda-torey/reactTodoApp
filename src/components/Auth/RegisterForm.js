@@ -1,15 +1,19 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import AuthContext from "../../store/auth-context";
 import classes from "./RegisterForm.module.css";
 import { Form, Spinner,InputGroup, Button, Alert } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 
 const RegisterForm = (props) => {
   const passRef = useRef();
+  const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
 
   const emailRef = useRef();
   const [isvalidPassword, setIsValidPassword] = useState(true);
+  const [emailExists,setEmailExists] = useState(false);
   const [isLoading,setIsLoading] = useState(false);
   const {
     register,
@@ -36,7 +40,7 @@ const RegisterForm = (props) => {
   };
 
   const submitHandler = (data) => {
-
+    setEmailExists(false);
     setIsLoading(true)
     
 
@@ -55,16 +59,28 @@ const RegisterForm = (props) => {
     
     ).then(res => {
         setIsLoading(false);
+       
         if(res.ok){
-            return res.json().then(data => {
-                console.log(data)
-            })
+            return res.json();
 
         }else {
             return res.json().then(data => {
-                console.log(data.error.message)
+              let errorMessage;
+              if(data.error.message === 'EMAIL_EXISTS'){
+                errorMessage = 'The User Already Exists'
+
+              }
+                
+                setEmailExists(true);
+                throw new Error(errorMessage);
             })
         }
+    }).then((data) => {
+      console.log(data.email);
+      authCtx.login(data.idToken);
+      navigate('/profile');
+    }).catch((err) => {
+      // alert(err.message)
     })
     
   };
@@ -94,6 +110,7 @@ const RegisterForm = (props) => {
         <small className="text-danger">
             {errors?.email && errors.email.message}
         </small>
+        {emailExists && <small className="text-danger text-center">user already exists</small>}
 
         <InputGroup className="mt-3 pt-3">
           <InputGroup.Text>
