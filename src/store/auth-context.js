@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect,useCallback } from "react";
+import {Navigate} from 'react-router-dom';
+
 
 let logoutTimer;
 export const AuthContext = React.createContext({
@@ -67,8 +69,10 @@ export const AuthContextProvider = (props) => {
         console.log(tokenData.duration);
         logoutTimer = setTimeout(logoutHandler,tokenData.duration);
 
+    } else {
+      <Navigate to ="/login" />
     }
-},[tokenData,logoutHandler]);
+},[tokenData,logoutHandler,Navigate]);
 
   const contextValue = {
     token: token,
