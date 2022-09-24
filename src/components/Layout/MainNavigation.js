@@ -36,6 +36,13 @@ const MainNavigation = (props) => {
                 <Nav.Link style={{ color: "white" }}>Profile</Nav.Link>
               </Link>
             )}
+            
+
+            {authCtx.isLoggedIn && (
+             
+                <Nav.Link to="/tasks" style={{ color: "white" }}>Tasks</Nav.Link>
+              
+            )}
 
             {!authCtx.isLoggedIn && (
               <Link to="/login" style={{ textDecoration: "none" }}>

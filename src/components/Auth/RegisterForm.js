@@ -144,7 +144,7 @@ const RegisterForm = (props) => {
       </Button>}
         
       </Form>
-      <div class="text-center fs-6">
+      <div className="text-center fs-6">
         <a href="#"><Link to="/login">Sign in</Link></a>
       </div>
     </div>

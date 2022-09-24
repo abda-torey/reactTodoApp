@@ -74,7 +74,7 @@ const LoginForm = props => {
              <Button variant = "primary" className={classes.button} onClick={submitHandler}>Login</Button>
 
             </Form>
-            <div class="text-center fs-6">
+            <div className="text-center fs-6">
             <a href="#">Forget password?</a> or <a href="#"><Link to="/register">Sign up</Link></a>
         </div>
 

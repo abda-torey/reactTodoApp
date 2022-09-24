@@ -9,6 +9,7 @@ import LoginForm from "./components/Auth/LoginForm";
 import RegisterForm from "./components/Auth/RegisterForm";
 import UserProfile from "./components/Profile/UserProfile";
 import AuthGuard from "./components/Auth/AuthGuard";
+import Tasks from "./components/Tasks/Tasks";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -19,11 +20,13 @@ function App() {
         {authCtx.isLoggedIn && <>
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/login" element={<Navigate to = "/profile" />} />
-        
+          <Route path="/tasks" element={<Tasks />} />
+          
         </>}
-   
+        
       
       <Route path="/"  element={<LoginForm /> } exact/>
+     
       <Route path="*"  element={<Navigate to="/login"/>} />
       </Routes>
     </Layout>
