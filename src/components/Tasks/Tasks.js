@@ -4,6 +4,7 @@ import AddTask from "./AddTask";
 const Tasks = (props) => {
   return (
     <Card>
+      <div className="container">
       <div class="row m-1 p-4">
         <div class="col">
           <div class="p-1 h2 text-primary text-center mx-auto display-inline-block">
@@ -13,8 +14,8 @@ const Tasks = (props) => {
           </div>
         </div>
       </div>
-      <AddTask />
-
+       <AddTask /> 
+      </div>
     </Card>
   );
 };
